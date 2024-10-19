@@ -1097,7 +1097,13 @@ function UILib:CreateUI(forcePlayerGui)
 					local logMax = math.log(MaxVal)
 					local logValue = logMin + (logMax - logMin) * Math
 					local Value = math.exp(logValue)
-					Value = tonumber(string.format("%.2f", Value))
+					local decimalPlaces = 0
+					if MinVal % 1 ~= 0 then
+						local _, fractional = tostring(MinVal):find("%.(%d+)")
+						decimalPlaces = fractional and #fractional or 0
+					end
+
+					Value = tonumber(string.format("%." .. decimalPlaces .. "f", Value))
 
 					Frame_2.Size = UDim2.new(
 						Math, 0,
@@ -2528,7 +2534,13 @@ function UILib:CreateUI(forcePlayerGui)
 						local logMax = math.log(MaxVal)
 						local logValue = logMin + (logMax - logMin) * Math
 						local Value = math.exp(logValue)
-						Value = tonumber(string.format("%.2f", Value))
+						local decimalPlaces = 0
+						if MinVal % 1 ~= 0 then
+							local _, fractional = tostring(MinVal):find("%.(%d+)")
+							decimalPlaces = fractional and #fractional or 0
+						end
+
+						Value = tonumber(string.format("%." .. decimalPlaces .. "f", Value))
 
 						Frame_2.Size = UDim2.new(
 							Math, 0,
@@ -2538,6 +2550,7 @@ function UILib:CreateUI(forcePlayerGui)
 						TextLabel.Text = tostring(Value) .. "/" .. tostring(MaxVal)
 						callback(Value)
 					end
+
 
 					Frame.InputBegan:Connect(function(Input)
 						if (Input.UserInputType == Enum.UserInputType.MouseButton1 or Input.UserInputType == Enum.UserInputType.Touch) and Input.UserInputState == Enum.UserInputState.Begin then
