@@ -61,15 +61,21 @@ function UILib:CreateUI(forcePlayerGui)
 
 	function Window:SetScale(Scale, Tween)
 		if Tween then
+			local tweenInfo = TweenInfo.new(
+				Tween.Time or 0.5,
+				Enum.EasingStyle.Quad,
+				Enum.EasingDirection.Out
+			)
 			game.TweenService:Create(
 				Scaleable,
-				Tween,
+				tweenInfo,
 				{Scale = Scale}
 			):Play()
 		else
 			Scaleable.Scale = Scale
 		end
 	end
+
 
 
 	local Constraint = Instance.new("Frame")
@@ -1100,7 +1106,7 @@ function UILib:CreateUI(forcePlayerGui)
 					local decimalPlaces = 0
 					if MinVal % 1 ~= 0 then
 						local _, fractional = tostring(MinVal):find("%.(%d+)")
-						decimalPlaces = fractional and #fractional or 0
+						decimalPlaces = fractional and ((type(fractional)=="number" and fractional) or #fractional) or 0
 					end
 
 					Value = tonumber(string.format("%." .. decimalPlaces .. "f", Value))
@@ -2537,7 +2543,7 @@ function UILib:CreateUI(forcePlayerGui)
 						local decimalPlaces = 0
 						if MinVal % 1 ~= 0 then
 							local _, fractional = tostring(MinVal):find("%.(%d+)")
-							decimalPlaces = fractional and #fractional or 0
+							decimalPlaces = fractional and ((type(fractional)=="number" and fractional) or #fractional) or 0
 						end
 
 						Value = tonumber(string.format("%." .. decimalPlaces .. "f", Value))
